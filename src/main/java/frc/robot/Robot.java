@@ -253,6 +253,7 @@ public class Robot extends TimedRobot {
     // SmartDashboard.putNumber("Blue", detectedColor.blue);
     SmartDashboard.putNumber("Confidence", match.confidence);
     SmartDashboard.putString("Detected Color", colorString);
+    SmartDashboard.putString("previous color", colors[rec_color]);
 
     SmartDashboard.putNumber("Proximity", proximity);
 
