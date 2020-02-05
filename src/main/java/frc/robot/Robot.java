@@ -192,13 +192,13 @@ public class Robot extends TimedRobot {
       //   color_number=rec_color+1;
       // }
 
-    if(color_number>3){
-      color_number=0;
-    }
+    // if(color_number>3){
+    //   color_number=0;
+    // }
 
-    if(rec_color>3){
-      rec_color=0;
-    }
+    // if(rec_color>3){
+    //   rec_color=0;
+    // }
       
   }
   else
@@ -228,5 +228,5 @@ public class Robot extends TimedRobot {
 
     SmartDashboard.putNumber("Proximity", proximity);
 
-  
+}
 }
