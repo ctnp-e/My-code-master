@@ -130,6 +130,17 @@ public class Robot extends TimedRobot {
 
     if (proximity >= 180)
     {
+
+      if (match.color == kBlueTarget) {
+        rec_color=0;
+      } else if (match.color == kRedTarget) {
+        rec_color=2;
+      } else if (match.color == kGreenTarget) {
+        rec_color=3;
+      } else if (match.color == kYellowTarget) {
+        rec_color=1;
+      }
+      
       if(color_number!=rec_color ){
         
         if(color_number>3){
