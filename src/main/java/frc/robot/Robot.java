@@ -153,6 +153,12 @@ public class Robot extends TimedRobot {
         //rec_color+=1;
       }
       if (match.color == kBlueTarget) {
+        if(rec_color==3){
+          color_number=0;
+          rec_color=3;
+        }else{
+
+        }
         color_number=0;
         colorString = colors[color_number];
         rec_color=3;
@@ -162,8 +168,8 @@ public class Robot extends TimedRobot {
         rec_color=1;
       } else if (match.color == kGreenTarget) {
         if(rec_color == 0){
-          color_number=1;
-          rec_color=0;
+          color_number=0;
+          rec_color=3;
         }else{
           color_number=3;
           rec_color=2;
