@@ -130,13 +130,6 @@ public class Robot extends TimedRobot {
 
     if (proximity >= 180)
     {
-
-      /*color_number_sec=color_number+1;
-
-      if(color_number_sec>3){
-        color_number_sec=0;
-      }
-      */
       if(color_number!=rec_color ){
         
         if(color_number>3){
@@ -151,75 +144,33 @@ public class Robot extends TimedRobot {
       if (match.color == kBlueTarget) {
         color_number=0;
         colorString = colors[color_number];
-
-      if(color_number!=rec_color ){
-        
-        if(color_number>3){
-          color_number=0;
-        }
-
-        if(rec_color>3){
-          rec_color=0;
-        }
-        rec_color+=1;
-      }
       } else if (match.color == kRedTarget) {
         color_number=2;
         colorString = colors[color_number];
-        
-      if(color_number!=rec_color ){
-        
-        if(color_number>3){
-          color_number=0;
-        }
-
-        if(rec_color>3){
-          rec_color=0;
-        }
-        rec_color+=1;
-      }
       } else if (match.color == kGreenTarget) {
+        if(rec_color == 1){
+          rec_color=2;
+        }
         color_number=3;
         colorString = colors[color_number];
-        
-      if(color_number!=rec_color ){
-        
-        if(color_number>3){
-          color_number=0;
-        }
-
-        if(rec_color>3){
-          rec_color=0;
-        }
-        rec_color+=1;
-      }
       } else if (match.color == kYellowTarget) {
+        if(rec_color == 3){
+          rec_color = 0;
+        }
         color_number=1;
         colorString = colors[color_number];
-        
-      if(color_number!=rec_color ){
-        
-        if(color_number>3){
-          color_number=0;
-        }
-
-        if(rec_color>3){
-          rec_color=0;
-        }
-        rec_color+=1;
-      }
       }
       else
       {
         colorString = "Unknown";
       } 
 
-      if(color_number!=rec_color+1){
-        if(color_number==0 && rec_color!=3){
-          color_number=0;
-        }
-        color_number=rec_color+1;
-      }
+      // if(color_number!=rec_color+1){
+      //   if(color_number==0 && rec_color!=3){
+      //     color_number=0;
+      //   }
+      //   color_number=rec_color+1;
+      // }
 
     if(color_number>3){
       color_number=0;
@@ -253,9 +204,9 @@ public class Robot extends TimedRobot {
     // SmartDashboard.putNumber("Blue", detectedColor.blue);
     SmartDashboard.putNumber("Confidence", match.confidence);
     SmartDashboard.putString("Detected Color", colorString);
-    SmartDashboard.putString("previous color", colors[rec_color]);
+    SmartDashboard.putString("Previous Color", colors[rec_color]);
 
     SmartDashboard.putNumber("Proximity", proximity);
 
-  }
+  
 }
