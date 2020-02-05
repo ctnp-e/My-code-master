@@ -150,6 +150,7 @@ public class Robot extends TimedRobot {
       } else if (match.color == kGreenTarget) {
         if(rec_color == 0){
           color_number=1;
+          rec_color=0;
         }else{
           color_number=3;
         }
@@ -157,8 +158,10 @@ public class Robot extends TimedRobot {
       } else if (match.color == kYellowTarget) {
         if(rec_color == 2){
           color_number = 3;
+          rec_color=2;
         }else{
           color_number=1;
+
         }
         colorString = colors[color_number];
       }
