@@ -148,16 +148,18 @@ public class Robot extends TimedRobot {
         color_number=2;
         colorString = colors[color_number];
       } else if (match.color == kGreenTarget) {
-        if(rec_color == 1){
-          rec_color=2;
+        if(rec_color == 0){
+          color_number=1;
+        }else{
+          color_number=3;
         }
-        color_number=3;
         colorString = colors[color_number];
       } else if (match.color == kYellowTarget) {
-        if(rec_color == 3){
-          rec_color = 0;
+        if(rec_color == 2){
+          color_number = 3;
+        }else{
+          color_number=1;
         }
-        color_number=1;
         colorString = colors[color_number];
       }
       else
