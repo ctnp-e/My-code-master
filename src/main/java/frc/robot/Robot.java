@@ -119,6 +119,15 @@ public class Robot extends TimedRobot {
     ColorMatchResult match = m_colorMatcher.matchClosestColor(detectedColor);
     String colorString = "initialized string";
 
+    if (match.color == kBlueTarget) {
+      rec_color=3;
+    } else if (match.color == kRedTarget) {
+      rec_color=1;
+    } else if (match.color == kGreenTarget) {
+      rec_color=2;
+    } else if (match.color == kYellowTarget) {
+      rec_color=0;
+    }
 
     if(color_number>3){
       color_number=0;
@@ -131,15 +140,6 @@ public class Robot extends TimedRobot {
     if (proximity >= 180)
     {
 
-      if (match.color == kBlueTarget) {
-        rec_color=3;
-      } else if (match.color == kRedTarget) {
-        rec_color=1;
-      } else if (match.color == kGreenTarget) {
-        rec_color=2;
-      } else if (match.color == kYellowTarget) {
-        rec_color=0;
-      }
       
       if(color_number!=rec_color ){
         
