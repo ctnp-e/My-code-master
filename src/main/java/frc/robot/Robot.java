@@ -146,6 +146,9 @@ public class Robot extends TimedRobot {
 //checks that BYRG
     check();
     if(proximity>180){
+      if (rec_color==color_number){
+        color_number+=1;
+      }
       if (match.color == kBlueTarget) {
         color_number=B;
         colorString = colors[color_number];
