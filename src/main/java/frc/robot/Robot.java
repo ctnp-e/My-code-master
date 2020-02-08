@@ -46,6 +46,16 @@ public class Robot extends TimedRobot {
   int color_number=-1;
   int rec_color=-1;
 
+  public void check(){
+    if(color_number>3){
+      color_number=0;
+    }
+
+    if(rec_color>3){
+      rec_color=0;
+    }
+  }
+
   @Override
   public void robotInit() {
     m_colorMatcher.addColorMatch(kBlueTarget);
@@ -118,7 +128,7 @@ public class Robot extends TimedRobot {
     Color detectedColor = m_colorSensor.getColor();
     ColorMatchResult match = m_colorMatcher.matchClosestColor(detectedColor);
     String colorString = "initialized string";
-
+//establishing previous color
     if (match.color == kBlueTarget) {
       rec_color=3;
     } else if (match.color == kRedTarget) {
@@ -128,61 +138,27 @@ public class Robot extends TimedRobot {
     } else if (match.color == kYellowTarget) {
       rec_color=0;
     }
-
-    if(color_number>3){
-      color_number=0;
-    }
-
-    if(rec_color>3){
-      rec_color=0;
-    }
-
-    if (proximity >= 180)
-    {
-
-      
-      if(color_number!=rec_color ){
-        
-        if(color_number>3){
-          color_number=0;
-        }
-
-        if(rec_color>3){
-          rec_color=0;
-        }
-        //rec_color+=1;
-      }
+//checks that
+    check();
+    if(proximity<180){
       if (match.color == kBlueTarget) {
-        if(rec_color==3){
-          color_number=0;
-          rec_color=3;
-        }else{
-
-        }
         color_number=0;
         colorString = colors[color_number];
-        rec_color=3;
       } else if (match.color == kRedTarget) {
         color_number=2;
         colorString = colors[color_number];
-        rec_color=1;
       } else if (match.color == kGreenTarget) {
-        if(rec_color == 0 || rec_color==1){
+        if(rec_color == 0){
           color_number=0;
-          rec_color=3;
         }else{
           color_number=3;
-          rec_color=2;
         }
         colorString = colors[color_number];
       } else if (match.color == kYellowTarget) {
-        if(rec_color == 2||rec_color==3){
+        if(rec_color == 2){
           color_number = 3;
-          rec_color=2;
         }else{
           color_number=1;
-          rec_color=0;
-
         }
         colorString = colors[color_number];
       }
@@ -190,22 +166,6 @@ public class Robot extends TimedRobot {
       {
         colorString = "Unknown";
       } 
-
-      // if(color_number!=rec_color+1){
-      //   if(color_number==0 && rec_color!=3){
-      //     color_number=0;
-      //   }
-      //   color_number=rec_color+1;
-      // }
-
-    // if(color_number>3){
-    //   color_number=0;
-    // }
-
-    // if(rec_color>3){
-    //   rec_color=0;
-    // }
-      
   }
   else
   {
