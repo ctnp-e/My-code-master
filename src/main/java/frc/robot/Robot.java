@@ -160,30 +160,36 @@ public class Robot extends TimedRobot {
         if (match.color == kBlueTarget) {
           color_number=B;
           temp_color_number=B;
+          rec_color=G;
           colorString = colors[color_number];
         } else if (match.color == kRedTarget) {
           color_number=R;
           temp_color_number=R;
           colorString = colors[color_number];
+          rec_color=Y;
         } else if (match.color == kGreenTarget) {
           if(rec_color+1!=temp_color_number){
             color_number=Y;
             rec_color=B;
             temp_color_number=Y;
+            colorString = colors[color_number];
           }else{
             color_number=G;
             rec_color=R;
             temp_color_number=G;
+            colorString = colors[color_number];
           }
         } else if (match.color == kYellowTarget) {
         if(rec_color+1!=temp_color_number){
           color_number=G;
           rec_color=R;
           temp_color_number=G;
+          colorString = colors[color_number];
         }else{
           color_number=Y;
           rec_color=B;
           temp_color_number=Y;
+          colorString = colors[color_number];
         }
       }
         else
