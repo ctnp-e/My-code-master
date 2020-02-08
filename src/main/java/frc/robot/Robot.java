@@ -60,6 +60,10 @@ public class Robot extends TimedRobot {
     if(rec_color>3){
       rec_color=0;
     }
+
+    if(temp_color_number>3){
+      temp_color_number=0;
+    }
   }
 
   @Override
