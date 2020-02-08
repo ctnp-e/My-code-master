@@ -160,6 +160,16 @@ public class Robot extends TimedRobot {
 //checks that BYRG
     check();
     if(proximity>180){
+      if(match.color==kBlueTarget){
+        temp_color_number=B;
+      }else if(match.color==kRedTarget){
+        temp_color_number=R;
+      }else if(match.color==kGreenTarget){
+        temp_color_number=G;
+      }else if(match.color==kYellowTarget){
+        temp_color_number=Y;
+      }else{
+      }
       if(temp_color_number!=color_number){
         if (match.color == kBlueTarget) {
           color_number=B;
@@ -184,27 +194,27 @@ public class Robot extends TimedRobot {
             colorString = colors[color_number];
           }
         } else if (match.color == kYellowTarget) {
-        if(rec_color+1!=temp_color_number){
-          color_number=G;
-          rec_color=R;
-          temp_color_number=G;
-          colorString = colors[color_number];
-        }else{
-          color_number=Y;
-          rec_color=B;
-          temp_color_number=Y;
-          colorString = colors[color_number];
+          if(rec_color+1!=temp_color_number){
+            color_number=G;
+            rec_color=R;
+            temp_color_number=G;
+            colorString = colors[color_number];
+          }else{
+            color_number=Y;
+            rec_color=B;
+            temp_color_number=Y;
+            colorString = colors[color_number];
+          }
         }
-      }
         else
         {
           colorString = "Unknown";
         } 
+       }
       }
       else
       {
         colorString = "Too Far Away";
-      }
       }
       
 
@@ -227,7 +237,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Confidence", match.confidence);
     SmartDashboard.putString("Detected Color", colorString);
     SmartDashboard.putString("Previous Color", colors[rec_color]);
-
+    SmartDashboard.putString("LEG COLOR", colors[temp_color_number]);
     SmartDashboard.putNumber("Proximity", proximity);
 
   }
