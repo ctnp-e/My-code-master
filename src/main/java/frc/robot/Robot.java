@@ -42,6 +42,11 @@ public class Robot extends TimedRobot {
   private final Color kRedTarget = ColorMatch.makeColor(0.421, 0.393, 0.183);
   private final Color kYellowTarget = ColorMatch.makeColor(0.361, 0.524, 0.113);
 
+  public static  int B=0;
+  public static  int Y=1;
+  public static  int R=2;
+  public static int G=3;
+
   String colors[] = {"Blue", "Yellow", "Red","Green"};  //It is spin some direction from the bottom of the control panel
   int color_number=-1;
   int rec_color=-1;
@@ -81,16 +86,16 @@ public class Robot extends TimedRobot {
       */
       
       if (match.color == kBlueTarget) {
-        rec_color=0;
+        rec_color=B;
         rec_colorString = colors[rec_color];
       } else if (match.color == kRedTarget) {
-        rec_color=2;
+        rec_color=R;
         rec_colorString = colors[rec_color];
       } else if (match.color == kGreenTarget) {
-        rec_color=3;
+        rec_color=G;
         rec_colorString = colors[rec_color];
       } else if (match.color == kYellowTarget) {
-        rec_color=1;
+        rec_color=Y;
         rec_colorString = colors[rec_color];
       }
       else
@@ -129,36 +134,40 @@ public class Robot extends TimedRobot {
     ColorMatchResult match = m_colorMatcher.matchClosestColor(detectedColor);
     String colorString = "initialized string";
 //establishing previous color
-    if (match.color == kBlueTarget) {
-      rec_color=3;
-    } else if (match.color == kRedTarget) {
-      rec_color=1;
-    } else if (match.color == kGreenTarget) {
-      rec_color=2;
-    } else if (match.color == kYellowTarget) {
-      rec_color=0;
-    }
-//checks that
+    // if (match.color == kBlueTarget) {
+    //   rec_color=3;
+    // } else if (match.color == kRedTarget) {
+    //   rec_color=1;
+    // } else if (match.color == kGreenTarget) {
+    //   rec_color=2;
+    // } else if (match.color == kYellowTarget) {
+    //   rec_color=0;
+    // }
+//checks that BYRG
     check();
-    if(proximity<180){
+    if(proximity>180){
       if (match.color == kBlueTarget) {
-        color_number=0;
+        color_number=B;
         colorString = colors[color_number];
       } else if (match.color == kRedTarget) {
-        color_number=2;
+        color_number=R;
         colorString = colors[color_number];
       } else if (match.color == kGreenTarget) {
-        if(rec_color == 0){
-          color_number=0;
+        if(rec_color == B){
+          color_number=Y;
+          rec_color=B;
         }else{
-          color_number=3;
+          color_number=G;
+          rec_color=R;
         }
         colorString = colors[color_number];
       } else if (match.color == kYellowTarget) {
-        if(rec_color == 2){
-          color_number = 3;
+        if(rec_color == R){
+          color_number = G;
+          rec_color=R;
         }else{
-          color_number=1;
+          color_number=Y;
+          rec_color=B;
         }
         colorString = colors[color_number];
       }
@@ -189,7 +198,7 @@ public class Robot extends TimedRobot {
     // SmartDashboard.putNumber("Green", detectedColor.green);
     // SmartDashboard.putNumber("Blue", detectedColor.blue);
     SmartDashboard.putNumber("Confidence", match.confidence);
-    SmartDashboard.putString("Detected Color", colors[color_number]);
+    SmartDashboard.putString("Detected Color", colorString);
     SmartDashboard.putString("Previous Color", colors[rec_color]);
 
     SmartDashboard.putNumber("Proximity", proximity);
