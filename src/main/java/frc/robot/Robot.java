@@ -166,15 +166,6 @@ public class Robot extends TimedRobot {
           temp_color_number=R;
           colorString = colors[color_number];
         } else if (match.color == kGreenTarget) {
-          // if(rec_color == B||rec_color==Y){
-          //   color_number=Y;
-          //   rec_color=B;
-          // }else{
-          //   color_number=G;
-          //   rec_color=R;
-          // }
-          // colorString = colors[color_number];
-  
           if(rec_color+1!=temp_color_number){
             color_number=Y;
             rec_color=B;
@@ -185,16 +176,6 @@ public class Robot extends TimedRobot {
             temp_color_number=G;
           }
         } else if (match.color == kYellowTarget) {
-        //   if(rec_color == R||rec_color==G){
-        //     color_number = G;
-        //     rec_color=R;
-        //   }else{
-        //     color_number=Y;
-        //     rec_color=B;
-        //   }
-        //   colorString = colors[color_number];
-        // }
-
         if(rec_color+1!=temp_color_number){
           color_number=G;
           rec_color=R;
