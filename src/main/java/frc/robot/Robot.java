@@ -50,6 +50,7 @@ public class Robot extends TimedRobot {
   String colors[] = {"Blue", "Yellow", "Red","Green"};  //It is spin some direction from the bottom of the control panel
   int color_number=-1;
   int rec_color=-1;
+  int temp_color_number=-1;
 
   public void check(){
     if(color_number>3){
@@ -75,6 +76,7 @@ public class Robot extends TimedRobot {
     ColorMatchResult match = m_colorMatcher.matchClosestColor(detectedColor);
     String rec_colorString = "initialized string";
 
+
     if (proximity >= 180)
     {
 
@@ -86,16 +88,20 @@ public class Robot extends TimedRobot {
       */
       
       if (match.color == kBlueTarget) {
-        rec_color=B;
+        rec_color=G;
+        temp_color_number=B;
         rec_colorString = colors[rec_color];
       } else if (match.color == kRedTarget) {
-        rec_color=R;
+        rec_color=Y;
+        temp_color_number=R;
         rec_colorString = colors[rec_color];
       } else if (match.color == kGreenTarget) {
-        rec_color=G;
+        rec_color=R;
+        temp_color_number=G;
         rec_colorString = colors[rec_color];
       } else if (match.color == kYellowTarget) {
-        rec_color=Y;
+        rec_color=B;
+        temp_color_number=Y;
         rec_colorString = colors[rec_color];
       }
       else
@@ -146,43 +152,66 @@ public class Robot extends TimedRobot {
 //checks that BYRG
     check();
     if(proximity>180){
-      if (rec_color==color_number){
-        color_number+=1;
-      }
-      if (match.color == kBlueTarget) {
-        color_number=B;
-        colorString = colors[color_number];
-      } else if (match.color == kRedTarget) {
-        color_number=R;
-        colorString = colors[color_number];
-      } else if (match.color == kGreenTarget) {
-        if(rec_color == B||rec_color==Y){
-          color_number=Y;
-          rec_color=B;
-        }else{
+      if(temp_color_number!=color_number){
+        if (match.color == kBlueTarget) {
+          color_number=B;
+          temp_color_number=B;
+          colorString = colors[color_number];
+        } else if (match.color == kRedTarget) {
+          color_number=R;
+          temp_color_number=R;
+          colorString = colors[color_number];
+        } else if (match.color == kGreenTarget) {
+          // if(rec_color == B||rec_color==Y){
+          //   color_number=Y;
+          //   rec_color=B;
+          // }else{
+          //   color_number=G;
+          //   rec_color=R;
+          // }
+          // colorString = colors[color_number];
+  
+          if(rec_color+1!=temp_color_number){
+            color_number=Y;
+            rec_color=B;
+            temp_color_number=Y;
+          }else{
+            color_number=G;
+            rec_color=R;
+            temp_color_number=G;
+          }
+        } else if (match.color == kYellowTarget) {
+        //   if(rec_color == R||rec_color==G){
+        //     color_number = G;
+        //     rec_color=R;
+        //   }else{
+        //     color_number=Y;
+        //     rec_color=B;
+        //   }
+        //   colorString = colors[color_number];
+        // }
+
+        if(rec_color+1!=temp_color_number){
           color_number=G;
           rec_color=R;
-        }
-        colorString = colors[color_number];
-      } else if (match.color == kYellowTarget) {
-        if(rec_color == R||rec_color==G){
-          color_number = G;
-          rec_color=R;
+          temp_color_number=G;
         }else{
           color_number=Y;
           rec_color=B;
+          temp_color_number=Y;
         }
-        colorString = colors[color_number];
+      }
+        else
+        {
+          colorString = "Unknown";
+        } 
       }
       else
       {
-        colorString = "Unknown";
-      } 
-  }
-  else
-  {
-    colorString = "Too Far Away";
-  }
+        colorString = "Too Far Away";
+      }
+      }
+      
 
     /**
      * The sensor returns a raw IR value of the infrared light detected.
@@ -206,5 +235,5 @@ public class Robot extends TimedRobot {
 
     SmartDashboard.putNumber("Proximity", proximity);
 
-}
+  }
 }
