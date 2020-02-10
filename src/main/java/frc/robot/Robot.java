@@ -1,10 +1,3 @@
-/*----------------------------------------------------------------------------*/
-/* Copyright (c) 2017-2018 FIRST. All Rights Reserved.                        */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
-/*----------------------------------------------------------------------------*/
-
 package frc.robot;
 
 import com.revrobotics.ColorMatch;
@@ -16,55 +9,20 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
 
-/*
- * The VM is configured to automatically run this class, and to call the
- * functions corresponding to each mode, as described in the TimedRobot
- * documentation. If you change the name of this class or the package after
- * creating this project, you must also update the build.gradle file in the
- * project.
- */
-
 public class Robot extends TimedRobot {
-  /**
-   * Change the I2C port below to match the connection of your color sensor
-   */
+
   private final I2C.Port i2cPort = I2C.Port.kOnboard;
 
-  /**
-   * A Rev Color Sensor V3 object is constructed with an I2C port as a 
-   * parameter. The device will be automatically initialized with default 
-   * parameters.
-   */
   private final ColorSensorV3 m_colorSensor = new ColorSensorV3(i2cPort);
-  private final ColorMatch m_colorMatcher = new ColorMatch();
-  private final Color kBlueTarget = ColorMatch.makeColor(0.143, 0.427, 0.429);
-  private final Color kGreenTarget = ColorMatch.makeColor(0.197, 0.561, 0.240);
-  private final Color kRedTarget = ColorMatch.makeColor(0.421, 0.393, 0.183);
-  private final Color kYellowTarget = ColorMatch.makeColor(0.361, 0.524, 0.113);
+  ColorMatch m_colorMatcher = new ColorMatch();
+  private final Color kBlueTarget = ColorMatch.makeColor(0.231, 0.463, 0.305);
+  private final Color kGreenTarget = ColorMatch.makeColor(0.240, 0.485, 0.274);
+  private final Color kRedTarget = ColorMatch.makeColor(0.293, 0.452, 0.253);
+  private final Color kYellowTarget = ColorMatch.makeColor(0.284, 0.491, 0.223); 
+  private String theColor;
+  int x=0;
+  String spoon;
 
-  public static  int B=0;
-  public static  int Y=1;
-  public static  int R=2;
-  public static int G=3;
-
-  String colors[] = {"Blue", "Yellow", "Red","Green"};  //It is spin some direction from the bottom of the control panel
-  int color_number=-1;
-  int rec_color=-1;
-  int temp_color_number=-1;
-
-  public void check(){
-    if(color_number>3){
-      color_number=0;
-    }
-
-    if(rec_color>3){
-      rec_color=0;
-    }
-
-    if(temp_color_number>3){
-      temp_color_number=0;
-    }
-  }
 
   @Override
   public void robotInit() {
@@ -72,173 +30,107 @@ public class Robot extends TimedRobot {
     m_colorMatcher.addColorMatch(kGreenTarget);
     m_colorMatcher.addColorMatch(kRedTarget);
     m_colorMatcher.addColorMatch(kYellowTarget);
-
-
-    int proximity = m_colorSensor.getProximity();
-    SmartDashboard.putNumber("Proximity", proximity);
-    Color detectedColor = m_colorSensor.getColor();
-    ColorMatchResult match = m_colorMatcher.matchClosestColor(detectedColor);
-    String rec_colorString = "initialized string";
-
-
-    if (proximity >= 180)
-    {
-
-      /*color_number_sec=color_number+1;
-
-      if(color_number_sec>3){
-        color_number_sec=0;
-      }
-      */
-      
-      if (match.color == kBlueTarget) {
-        rec_color=G;
-        temp_color_number=B;
-        rec_colorString = colors[rec_color];
-        color_number=B;
-      } else if (match.color == kRedTarget) {
-        rec_color=Y;
-        temp_color_number=R;
-        rec_colorString = colors[rec_color];
-        color_number=R;
-      } else if (match.color == kGreenTarget) {
-        rec_color=R;
-        temp_color_number=G;
-        rec_colorString = colors[rec_color];
-        color_number=G;
-      } else if (match.color == kYellowTarget) {
-        rec_color=B;
-        temp_color_number=Y;
-        rec_colorString = colors[rec_color];
-        color_number=Y;
-      }
-      else
-      {
-        rec_colorString = "Unknown";
-      } 
-      
+    x=0;
   }
-  else
-  {
-    rec_colorString = "Too Far Away";
-  }
-
-    
-  }
+  
   @Override
-  public void robotPeriodic() {
-    /**
-     * The method GetColor() returns a normalized color value from the sensor and can be
-     * useful if outputting the color to an RGB LED or similar. To
-     * read the raw color, use GetRawColor().
-     * 
-     * The color sensor works best when within a few inches from an object in
-     * well lit conditions (the built in LED is a big help here!). The farther
-     * an object is the more light from the surroundings will bleed into the 
-     * measurements and make it difficult to accurately determine its color.
-     */
+  public void robotPeriodic() 
+  {
+    SmartDashboard.putString("keep spinning",spoon);
+    if(x<7){
+      if(getColor().equals("Green")){
+        x+=1;
+      }
+      spoon="Keep spinning";
+    }else{
+      spoon="STOP!!!!!!!!!!!!!!!!!!";
+    }
+  }
 
-     //clockwise bottom
-     //counterclockwise top
-    
 
+  public String getColor() 
+  {
     int proximity = m_colorSensor.getProximity();
-    SmartDashboard.putNumber("Proximity", proximity);
     Color detectedColor = m_colorSensor.getColor();
     ColorMatchResult match = m_colorMatcher.matchClosestColor(detectedColor);
-    String colorString = "initialized string";
-//establishing previous color
-    // if (match.color == kBlueTarget) {
-    //   rec_color=3;
-    // } else if (match.color == kRedTarget) {
-    //   rec_color=1;
-    // } else if (match.color == kGreenTarget) {
-    //   rec_color=2;
-    // } else if (match.color == kYellowTarget) {
-    //   rec_color=0;
-    // }
-//checks that BYRG
-    check();
-    if(proximity>180){
-      if(match.color==kBlueTarget){
-        temp_color_number=B;
-      }else if(match.color==kRedTarget){
-        temp_color_number=R;
-      }else if(match.color==kGreenTarget){
-        temp_color_number=G;
-      }else if(match.color==kYellowTarget){
-        temp_color_number=Y;
-      }else{
-      }
-      if(temp_color_number!=color_number){
-        if (match.color == kBlueTarget) {
-          color_number=B;
-          temp_color_number=B;
-          rec_color=G;
-          colorString = colors[color_number];
-        } else if (match.color == kRedTarget) {
-          color_number=R;
-          temp_color_number=R;
-          colorString = colors[color_number];
-          rec_color=Y;
-        } else if (match.color == kGreenTarget) {
-          if(rec_color+1!=temp_color_number){
-            color_number=Y;
-            rec_color=B;
-            temp_color_number=Y;
-            colorString = colors[color_number];
-          }else{
-            color_number=G;
-            rec_color=R;
-            temp_color_number=G;
-            colorString = colors[color_number];
-          }
-        } else if (match.color == kYellowTarget) {
-          if(rec_color+1!=temp_color_number){
-            color_number=G;
-            rec_color=R;
-            temp_color_number=G;
-            colorString = colors[color_number];
-          }else{
-            color_number=Y;
-            rec_color=B;
-            temp_color_number=Y;
-            colorString = colors[color_number];
-          }
-        }
-        else
-        {
-          colorString = "Unknown";
-        } 
-       }
+    String colorString = "initialized colorstring";
+    if (proximity > 190)
+    {
+      if (match.color == kBlueTarget) 
+      {
+        colorString = "Blue";
+      } else if (match.color == kRedTarget) 
+      {
+        colorString = "Red";
+      } else if (match.color == kGreenTarget) 
+      {
+        colorString = "Green";
+      } else if (match.color == kYellowTarget) 
+      {
+        colorString = "Yellow";
       }
       else
       {
-        colorString = "Too Far Away";
+        colorString = "Unknown";
       }
       
+      theColor = colorString;
 
-    /**
-     * The sensor returns a raw IR value of the infrared light detected.
-     */
-    double IR = m_colorSensor.getIR();
+      for (int i = 999; i > 0; i--)
+      {
+        
+      }
+      Color detectedColor_temp = m_colorSensor.getColor();
+      ColorMatchResult match_temp = m_colorMatcher.matchClosestColor(detectedColor_temp);
+      String colorString_temp = "initialized coloring temp";
+      if (match_temp.color == kBlueTarget) {
+        colorString_temp = "Blue";
+      } else if (match_temp.color == kRedTarget) {
+        colorString_temp = "Red";
+      } else if (match_temp.color == kGreenTarget) {
+        colorString_temp = "Green";
+      } else if (match_temp.color == kYellowTarget) {
+        colorString_temp = "Yellow";
+      }
 
-    /**
-     * Open Smart Dashboard or Shuffleboard to see the color detected by the 
-     * sensor.
-     */
-    SmartDashboard.putNumber("Red", detectedColor.red);
-    SmartDashboard.putNumber("Green", detectedColor.green);
-    SmartDashboard.putNumber("Blue", detectedColor.blue);
-    SmartDashboard.putNumber("IR", IR);
-    // SmartDashboard.putNumber("Red", detectedColor.red);
-    // SmartDashboard.putNumber("Green", detectedColor.green);
-    // SmartDashboard.putNumber("Blue", detectedColor.blue);
-    SmartDashboard.putNumber("Confidence", match.confidence);
-    SmartDashboard.putString("Detected Color", colorString);
-    SmartDashboard.putString("Previous Color", colors[rec_color]);
-    SmartDashboard.putString("LEG COLOR", colors[temp_color_number]);
-    SmartDashboard.putNumber("Proximity", proximity);
 
+      if (!colorString_temp.equals(colorString))
+      {
+          if (colorString.equals("Yellow"))
+          {
+            if (colorString_temp.equals("Blue") && !colorString_temp.equals("Green"))
+            {
+                theColor = "Blue";
+            }
+          }
+          else if (colorString.equals("Green"))
+          {
+            if (colorString_temp.equals("Red") && !colorString_temp.equals("Yellow"))
+            {
+              theColor = "Red";
+            }
+          }
+          else if (colorString.equals("Red"))
+          {
+            if (colorString_temp.equals("Yellow"))
+            {
+              theColor = "Yellow";
+            }
+          }
+          else if (colorString.equals("Blue"))
+          {
+            if (colorString_temp.equals("Green"))
+            {
+                theColor = "Green";
+            }
+          }
+      }
+    }
+    else
+    {
+      theColor = "Too Far Away";
+    }
+    SmartDashboard.putString("Detected Color", theColor);
+    return theColor;
   }
 }
